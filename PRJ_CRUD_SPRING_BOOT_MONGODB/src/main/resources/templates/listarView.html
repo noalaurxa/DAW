@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Listado de Cursos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #1e7e34;">
+        <div class="container">
+            <a class="navbar-brand fs-3 text-white" href="#">Spring Boot</a>
+        </div>
+    </nav>
+</header>
+
+<div class="container" style="margin-top: 90px;">
+    <h2 th:text="${titulo}"></h2>
+
+    <div class="mt-3 mb-3">
+        <a th:href="@{/form}" class="btn btn-success">Crear Curso</a>
+    </div>
+
+    <table class="table table-bordered table-hover text-center">
+        <thead class="table-light">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Créditos</th>
+            <th colspan="2">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="curso : ${cursos}">
+            <td th:text="${curso.id}"></td>
+            <td th:text="${curso.nombre}"></td>
+            <td th:text="${curso.creditos}"></td>
+            <td>
+                <a class="btn btn-primary btn-sm" th:href="@{'/form/' + ${curso.id}}">Editar</a>
+            </td>
+            <td>
+                <a class="btn btn-danger btn-sm"
+                   th:href="@{'/eliminar/' + ${curso.id}}"
+                   onclick="return confirm('¿Estás seguro de eliminar este curso?');">
+                    Eliminar
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
