@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Mesa - Sabor Gourmet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<!-- Header reutilizable -->
+<div th:replace="fragments/header :: mainHeader"></div>
+
+<div class="container my-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <!-- Encabezado con icono -->
+                <div class="card-header bg-danger text-white text-center py-3 rounded-top-4 d-flex flex-column align-items-center">
+                    <h3 class="mb-0 fw-bold" th:text="${mesa.idMesa != null} ? 'Editar Mesa' : 'Registrar Nueva Mesa'">Registrar Nueva Mesa</h3>
+                    <small class="text-white-50 mt-1">Complete los datos de la mesa</small>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form th:action="@{/mesas/guardar}" th:object="${mesa}" method="post">
+
+                        <!-- Campo oculto para ID (muy importante para editar) -->
+                        <input type="hidden" th:field="*{idMesa}" />
+
+                        <!-- Número de Mesa -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Número de Mesa</label>
+                            <input type="number" class="form-control rounded-3 shadow-sm" th:field="*{numero}" placeholder="Ej: 12" required>
+                        </div>
+
+                        <!-- Capacidad -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Capacidad</label>
+                            <input type="number" class="form-control rounded-3 shadow-sm" th:field="*{capacidad}" placeholder="Ej: 4" required>
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Estado</label>
+                            <select class="form-select rounded-3 shadow-sm" th:field="*{estado}">
+                                <option th:value="DISPONIBLE"
+                                        th:selected="${mesa.estado == T(com.saborgourmet.restaurante.entity.Mesa.EstadoMesa).DISPONIBLE}">DISPONIBLE</option>
+                                <option th:value="RESERVADA"
+                                        th:selected="${mesa.estado == T(com.saborgourmet.restaurante.entity.Mesa.EstadoMesa).RESERVADA}">RESERVADA</option>
+                                <option th:value="MANTENIMIENTO"
+                                        th:selected="${mesa.estado == T(com.saborgourmet.restaurante.entity.Mesa.EstadoMesa).MANTENIMIENTO}">MANTENIMIENTO</option>
+                            </select>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a th:href="@{/mesas}" class="btn btn-outline-secondary px-5 rounded-3 shadow-sm">
+                                <i class="bi bi-x-circle me-2"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger px-5 rounded-3 shadow-sm">
+                                <i class="bi bi-check-circle me-2"></i> Guardar
+                            </button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
